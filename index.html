@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Exercice 1 JQuery - Partie 4</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <script src="jquery-3.2.1.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="exercice">
+    <h1>Exercice 1 JQuery - Partie 4</h1>
+    <p>Créer une liste avec trois éléments (Pierre, Feuille, Ciseaux). Ajouter un bouton « Shifumi ! ».
+    </br>Lorsque l'on clique sur « Shifumi ! », choisir un élément au hasard (Pierre, Feuille ou Ciseaux).
+    </br>Le comparer à l'élément choisi par le joueur pour voir qui a gagné entre l'humain et la machine.
+  </br></br><b>Bonus</b> : Ajouter un compteur de victoires et de défaites et afficher le pourcentage de victoire contre l'ordinateur.
+    </p>
+  </div>
+
+  <div class="shifumi">
+
+  </div>
+
+  <div id="block-jeu">
+    <h1>SHI-FU-MI</h1>
+    <p>Choisissez l'arme de votre choix et affrontez le hasard de l'ordinateur...</p>
+      <input type="radio" id="pierre" name="choice" value="pierre"><img src="img/pierre.jpg"></input>
+      <input type="radio" id="feuille" name="choice" value="feuille"><img src="img/feuille.jpg"></input>
+      <input type="radio" id="ciseaux" name="choice" value="ciseaux"><img src="img/ciseaux.jpg"></input>
+
+      <button type="button" name="button" id="shifumi">ShiFuMi</button>
+  </div>
+
+
+<script>
+  var computerWin = 0;
+  var userWin = 0;
+
+$("#shifumi").click(function compare() {
+
+  var shifumi = ["pierre", "feuille", "ciseaux"];
+  var computerChoice = shifumi[Math.floor(Math.random() * shifumi.length)];
+  var userChoice =document.querySelector("input[name=choice]:checked").value;
+  console.log(userChoice);
+  console.log(computerChoice);
+
+      if(userChoice == computerChoice) {
+          alert("Il y a égalité.\n L'ordinateur a choisi " + computerChoice + "\n Score :\n vous " + userWin + " - " + computerWin + " ordinateur");
+      }
+      else if((userChoice == "pierre" && computerChoice == "ciseaux") || (userChoice == "feuille" && computerChoice == "pierre") || (userChoice == "ciseaux" && computerChoice == "feuille")) {
+        userWin++;
+          alert("Vous avez gagné.\n L'ordinateur a choisi " + computerChoice + "\n Score :\n vous "+ userWin +" - " + computerWin +" ordinateur");
+          // alert("Score :\n vous "+ userWin +" - " + computerWin " ordinateur");
+      }
+      else if((userChoice == "feuille" && computerChoice == "ciseaux") || (userChoice == "piere" && computerChoice == "feuille") || (userChoice == "ciseaux" && computerChoice == "pierre")) {
+        computerWin++;
+          alert("Vous avez perdu.\n L'ordinateur a choisi " + computerChoice + "\n Score :\n vous "+ userWin +" - " + computerWin +" ordinateur");
+          // alert("Score :\n vous "+ userWin +" - " + computerWin " ordinateur");
+      }
+})
+
+
+// $("#pierre").click(function(){
+//   if(userChoice==computerChoice){alert("égalité !")}
+//   else if(computerChoice=="feuille"){alert("Vous avez perdu :(")}
+//       else if(computerChoice=="ciseaux"){alert("vous avez gagné !!")}
+//
+// })
+
+
+
+
+// // création de la classe affichage des différents messages
+//   var Afficheur = function(element) {
+//       var display = element; // cette variable est chargée de prendre l'élement passer au niveau du constructeur
+//
+//       function setText(message) { // chargée de modifier le contenu de l'element passé dans le constructeur par un message qui lui sera passé
+//           display.innerHTML = message; // methode qui change le texte htlm de l'élement par le message
+//       }
+//       return {sendMessage : setText};
+//   }
+//
+//   var scortO = 0;
+//   var scortU = 0;
+//
+//   var afficheur = new Afficheur(document.querySelector("#statut-jeu")); // création de l'objet qui va modifier le texte du résultat du jeu
+//
+//   function FchoixOrdi() {
+//       var choixOrdi = Math.floor(Math.random() * 51);
+//
+//           if (choixOrdi < 20) {
+//               choixOrdi = "pierre";
+//           }
+//           else if(choixOrdi > 20 && choixOrdi < 40) {
+//               choixOrdi = "feuille";
+//           }
+//           else if(choixOrdi > 40) {
+//               choixOrdi = "ciseaux";
+//           }
+//           return choixOrdi;
+//   }
+//
+//   function FchoixUtilisateur(_choixUtilisateur) {
+//
+//           if(_choixUtilisateur == "pierre") {
+//               _choixUtilisateur = "pierre";
+//           }
+//           else if(_choixUtilisateur == "feuille") {
+//               _choixUtilisateur = "feuille";
+//           }
+//           else if(_choixUtilisateur == "ciseaux") {
+//               _choixUtilisateur = "ciseaux";
+//           }
+//           return _choixUtilisateur;
+//   }
+//
+//   function nouvellePartie(){
+//       scortO = 0;
+//       scortU = 0;
+//       $('#block-jeu button').css('display', 'block');
+//       afficheur.sendMessage("Le jeu peut commencer. choisissez un objet");
+//   }
+//
+//   function main() {
+//
+//       // déclaration de notre tableau pions qui va contenir l'ensemble des boutons
+//       var tabchoixUtilisateur = document.querySelectorAll("#block-jeu button"); // la méthode va selectionner tous les boutons présent dans la div block-jeu et les retourner dans notre tableau pions
+//
+//       for(var i = 0, taille = tabchoixUtilisateur.length; i < taille; i++){
+//
+//           var finJeu = 0;
+//
+//           afficheur.sendMessage("Le jeu peut commencer. choisissez un objet"); // modification du message + choix du joueur
+//
+//           tabchoixUtilisateur[i].addEventListener("click", function(){
+//
+//               choixUtilisateur = this.id;
+//
+//               var choixU = FchoixUtilisateur(choixUtilisateur);
+//               var choixO = FchoixOrdi();
+//               comparer(choixO, choixU);
+//
+//               finJeu++;
+//
+//                   if(finJeu >= 4){
+//                       $('#block-jeu button').css('display', 'none');
+//                       afficheur.sendMessage("Le jeu est fini</br>Ordi : " + scortO + "</br>Joueur : " + scortU + "<button onclick='nouvellePartie()'>Rejouer ?</button>");
+//                       finJeu = 0;
+//                   }
+//           });
+//       }
+//   }
+//
+//   main();
+
+</script>
+</body>
+
+<footer>
+<p>Exercices réalisés à
+<a href="https://lamanu.fr/le-havre">LaManu</a></p>
+</footer>
+</html>
